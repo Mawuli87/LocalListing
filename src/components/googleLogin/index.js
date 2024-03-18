@@ -1,7 +1,8 @@
 import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
-import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import { GoogleSignin, statusCodes, GoogleSigninButton } from '@react-native-google-signin/google-signin';
+
 
 const GoogleLogin = () => {
     const handleGoogleLogin = async () => {
@@ -23,8 +24,12 @@ const GoogleLogin = () => {
     };
 
     return (
-        <TouchableOpacity activeOpacity={0.6} onPress={handleGoogleLogin} style={styles.container}>
-            <Image style={styles.image} source={require('../../assets/google.png')} />
+
+
+
+         <TouchableOpacity activeOpacity={0.6} onPress={handleGoogleLogin} style={styles.container}>
+             {/* <Image style={styles.image} source={require('../../assets/google.png')} /> */}
+             <GoogleSigninButton />
         </TouchableOpacity>
     );
 };
