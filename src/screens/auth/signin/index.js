@@ -19,7 +19,7 @@ const Signin = ({ navigation }) => {
     //const { setUser } = useContext(UserContext);
 
     const onSignUp = () => {
-        navigation.navigate('SignUp');
+        navigation.navigate('Signup');
     };
 
     const onBack = () => {
