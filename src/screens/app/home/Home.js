@@ -10,16 +10,23 @@ import HeightSpacer from '../../../components/hightSpace/HeightSpacer';
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState();
+    const [keyword, setKeyword] = useState();
  const [filteredProducts, setFilteredProducts] = useState(products);
 
  useEffect(()=>{
-     if(selectedCategory){
-      const updatedProducts = products.filter((product)=>product?.category === selectedCategory);
-    setFilteredProducts(updatedProducts);
-     }else {
-    setFilteredProducts(products)
-     }
- },[selectedCategory])
+        if (selectedCategory && !keyword) {
+            const updatedProducts = products.filter(product => String(product?.category) === String(selectedCategory));
+            setFilteredProducts(updatedProducts);
+        } else if (selectedCategory && keyword) {
+            const updatedProducts = products.filter(product => String(product?.category) === String(selectedCategory) && product?.title?.toLowerCase().includes(keyword?.toLowerCase()));
+            setFilteredProducts(updatedProducts);
+        } else if (!selectedCategory && keyword) {
+            const  updatedProducts = products.filter(product => product?.title?.toLowerCase().includes(keyword?.toLowerCase()));
+            setFilteredProducts(updatedProducts);
+        } else if (!keyword && !selectedCategory) {
+            setFilteredProducts(products);
+        }
+ },[selectedCategory,keyword])
 
       const renderCategoryItem = ({ item, index }) => {
         return (
@@ -51,8 +58,8 @@ const Home = () => {
 
   return (
       <SafeAreaView>
-            <Header showSearch   title='Find All You Need' />
-
+            <Header showSearch onSearch={setKeyword} keyword={keyword}   title='Find All You Need' />
+              
              <View>
                 <FlatList
                 showsHorizontalScrollIndicator={false}
