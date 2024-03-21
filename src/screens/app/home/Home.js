@@ -8,7 +8,7 @@ import { products } from '../../../data/products';
 import ProductHomeItem from '../../../components/productItem/ProductHomeItem';
 import HeightSpacer from '../../../components/hightSpace/HeightSpacer';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const [selectedCategory, setSelectedCategory] = useState();
     const [keyword, setKeyword] = useState();
  const [filteredProducts, setFilteredProducts] = useState(products);
@@ -42,7 +42,7 @@ const Home = () => {
 
        const renderProductItem = ({ item }) => {
         const onProductPress = (product) => {
-            navigation.navigate('ProductDetails', { product });
+            navigation.navigate('ProductDetails',  {item});
         };
 
       

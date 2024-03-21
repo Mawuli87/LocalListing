@@ -14,6 +14,7 @@ import Favorites from './src/screens/app/favorites/Favorites';
 import Profile from './src/screens/app/profile/Profile';
 import { colors } from './src/utils/colors';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import ProductDetails from './src/screens/app/productDetails/ProductDetails';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -78,6 +79,7 @@ useEffect(()=>{
           {isSignedIn ? (
             <>
               <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
+                <Stack.Screen name="ProductDetails" component={ProductDetails} options={{ headerShown: false }} />
             </>
           ) : (
             <>
