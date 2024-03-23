@@ -15,6 +15,9 @@ import Profile from './src/screens/app/profile/Profile';
 import { colors } from './src/utils/colors';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ProductDetails from './src/screens/app/productDetails/ProductDetails';
+import Settings from './src/screens/app/settings/Settings';
+import CreateListing from './src/screens/app/createListing/CreateListing';
+import MyListings from './src/screens/myListing/MyListings';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -80,12 +83,16 @@ useEffect(()=>{
             <>
               <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
                 <Stack.Screen name="ProductDetails" component={ProductDetails} options={{ headerShown: false }} />
+                <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
+              <Stack.Screen name="CreateListing" component={CreateListing} options={{ headerShown: false }}/>
+              <Stack.Screen name="MyListings" component={MyListings} options={{ headerShown: false }}/>
             </>
           ) : (
             <>
               <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
               <Stack.Screen name="Signin" component={Signin} options={{ headerShown: false }} />
               <Stack.Screen name="Signup" component={SignUp} options={{ headerShown: false }} />
+              
             </>
           )}
         </Stack.Navigator>
