@@ -5,37 +5,37 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import ListItem from '../../../components/listItem/ListItem';
 import Button from '../../../components/button';
 import Header from '../../../components/header/Header';
+import { ProfileContext } from '../../../../App';
+import { getProfile } from '../../../utils/backendCalls';
 
-//import { getProfile } from '../../../utils/backendCalls';
-//import { ProfileContext } from '../../../../App';
 
 const Profile = ({ navigation }) => {
     const num = 10;
-   // const { profile, setProfile } = useContext(ProfileContext);
+   const { profile, setProfile } = useContext(ProfileContext);
 
-    // useEffect(() => {
-    //     (async () => {
-    //         const data = await getProfile();
+    useEffect(() => {
+        (async () => {
+            const data = await getProfile();
 
-    //         setProfile(data);
-    //     })();
-    // }, []);
+            setProfile(data);
+        })();
+    }, []);
 
-    const onLogout = () => {
+     const onLogout = () => {
         console.log('log out clicked');
-    };
+    }
 
     const onSettingsPress = () => {
         navigation.navigate('Settings');
-    };
+    }
 
     const onMyListingsPress = () => {
         navigation.navigate('MyListings');
-    };
+    }
 
     const onNewListingPress = () => {
         navigation.navigate('CreateListing');
-    };
+    }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
