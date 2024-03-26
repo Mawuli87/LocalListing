@@ -9,6 +9,7 @@ import Seperator from '../../../components/seperator';
 import GoogleLogin from '../../../components/googleLogin';
 import { styles } from './styles';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { request } from '../../../utils/request';
 
 
 const SignUp = ({navigation}) => {
@@ -32,25 +33,27 @@ const SignUp = ({navigation}) => {
                 Alert.alert('All fields are required');
                 return;
             }
-
+    
             if (values?.password !== values?.confirmPassword) {
                 Alert.alert('Passwords do not match');
                 return;
             }
-
+    
             if (!checked) {
                 Alert.alert('Please agree to the terms');
                 return;
             }
-
-            const token = await signup(values);
-           // setUser({ token });
-
-            //console.log('token :>> ', token);
-        } catch (error) {
+    
+            const response = await request({
+                url: '/user/register',
+                method: 'post',
+                data: values,
+            });
+            console.log('response :>> ', response);
+        } catch(error) {
             console.log('error :>> ', error);
         }
-    };
+    } 
 
     return (
         <SafeAreaView>
