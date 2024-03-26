@@ -7,6 +7,8 @@ import Header from '../../../components/header/Header';
 import Input from '../../../components/input/Input';
 import Button from '../../../components/button';
 import { categories } from '../../../data/categories';
+import { addService } from '../../../utils/backendCalls';
+import { ServicesContext } from '../../../../App';
 
 
 
@@ -14,6 +16,7 @@ const CreateListing = ({ navigation }) => {
     const [images, setImages] = useState([]);
     const [values, setValues] = useState({});
     const [loading, setLoading] = useState(false);
+      const { setServices } = useContext(ServicesContext);
 
     const goBack = () => {
         navigation.goBack();
@@ -39,6 +42,25 @@ const CreateListing = ({ navigation }) => {
     const onChange = (value, key) => {
         setValues((val) => ({ ...val, [key]: value }));
     }
+       const onSubmit = async () => {
+        const img = images?.length ? images[0] : null;
+        const data = {
+            ...values,
+            category: values.category?.id,
+        };
+
+        if (img) {
+            data.image = {
+                uri: img?.uri,
+                name: img?.fileName,
+                type: img?.type,
+            };
+        }
+        const updatedServices = await addService(data);
+        setServices(updatedServices);
+        // setValues({});
+        navigation.navigate('MyListings');
+    };
 
     return (
         <SafeAreaView>
@@ -75,7 +97,7 @@ const CreateListing = ({ navigation }) => {
                     <Input style={styles.textarea} placeholder="Tell us more..." label="Description" value={values.description} onChangeText={(v) => onChange(v, 'description')} multiline />
                 </KeyboardAvoidingView>
 
-                <Button title="Submit" style={styles.button} />
+                <Button onPress={onSubmit} title='Submit' style={styles.button} />
             </ScrollView>
         </SafeAreaView>
     )

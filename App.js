@@ -1,63 +1,18 @@
-import { View, Text, SafeAreaView, Image } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import SignUp from './src/screens/auth/signup/SignUp';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import Config from 'react-native-config';
-import Signin from './src/screens/auth/signin';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Splash from './src/screens/auth/splash/Splash';
-import Home from './src/screens/app/home/Home';
-import Favorites from './src/screens/app/favorites/Favorites';
-import Profile from './src/screens/app/profile/Profile';
-import { colors } from './src/utils/colors';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import ProductDetails from './src/screens/app/productDetails/ProductDetails';
-import Settings from './src/screens/app/settings/Settings';
-import CreateListing from './src/screens/app/createListing/CreateListing';
-import MyListings from './src/screens/myListing/MyListings';
+import Routes from './src/navigation/Routes';
 
-const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
 
-const Tabs = () => (
-  <Tab.Navigator 
-    screenOptions={({ route }) => ({
-      tabBarIcon: ({ focused, color, size }) => {
-        let icon;
-
-        if (route.name === 'Home') {
-          icon = focused
-            ? require('./src/assets/tabs/home_active.png')
-            : require('./src/assets/tabs/home.png');
-        } else if (route.name === 'Profile') {
-          icon = focused
-            ? require('./src/assets/tabs/profile_active.png')
-            : require('./src/assets/tabs/profile.png');
-        } else if (route.name === 'Favorites') {
-          icon = focused
-            ? require('./src/assets/tabs/bookmark_active.png')
-            : require('./src/assets/tabs/bookmark.png');
-        }
-
-        // You can return any component that you like here!
-        return <Image style={{ width: 24, height: 24 }} source={icon} />
-      },
-      headerShown: false,
-      tabBarShowLabel: true,
-      tabBarStyle: { borderTopColor: colors.lightGrey,paddingBottom:8,paddingTop:5 }
-    })}
-  >
-    <Tab.Screen name="Home" component={Home} />
-    <Tab.Screen name="Favorites" component={Favorites} />
-    <Tab.Screen name="Profile" component={Profile} />
-  </Tab.Navigator>
-)
-
+export const UserContext = React.createContext();
+export const ProfileContext = React.createContext();
+export const ServicesContext = React.createContext([]);
 const App = () => {
-   const isSignedIn = true;
+    const [user, setUser] = useState();
+     const [profile, setProfile] = useState();
+    const [services, setServices] = useState();
+   
 
 useEffect(()=>{
  GoogleSignin.configure({
@@ -69,35 +24,16 @@ useEffect(()=>{
 
   },[])
 
-  const theme = {
-    colors: {
-      background: colors.orange,
-    }
-  }
-
   return (
-    <SafeAreaProvider >
-      <NavigationContainer>
-        <Stack.Navigator>
-          {isSignedIn ? (
-            <>
-              <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
-                <Stack.Screen name="ProductDetails" component={ProductDetails} options={{ headerShown: false }} />
-                <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
-              <Stack.Screen name="CreateListing" component={CreateListing} options={{ headerShown: false }}/>
-              <Stack.Screen name="MyListings" component={MyListings} options={{ headerShown: false }}/>
-            </>
-          ) : (
-            <>
-              <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
-              <Stack.Screen name="Signin" component={Signin} options={{ headerShown: false }} />
-              <Stack.Screen name="Signup" component={SignUp} options={{ headerShown: false }} />
-              
-            </>
-          )}
-        </Stack.Navigator>
-      </NavigationContainer>
-   </SafeAreaProvider>
+     <SafeAreaProvider>
+      <UserContext.Provider value={{ user, setUser }}>
+        <ProfileContext.Provider value={{ profile, setProfile }}>
+          <ServicesContext.Provider value={{ services, setServices }}>
+            <Routes />
+          </ServicesContext.Provider>
+        </ProfileContext.Provider>
+      </UserContext.Provider>
+    </SafeAreaProvider>
   );
 }
 

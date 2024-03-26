@@ -8,15 +8,13 @@ import AuthHeader from '../../../components/authHeader/AuthHeader';
 import Input from '../../../components/input/Input';
 import Button from '../../../components/button';
 import Seperator from '../../../components/seperator';
+import { UserContext } from '../../../../App';
+import { login } from '../../../utils/backendCalls';
 
-
-
-// import { login } from '../../../utils/backendCalls';
-// import { UserContext } from '../../../../App';
 
 const Signin = ({ navigation }) => {
     const [values, setValues] = useState({});
-    //const { setUser } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
 
     const onSignUp = () => {
         navigation.navigate('Signup');
